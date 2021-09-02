@@ -125,7 +125,7 @@ class Book {
                     let lastBookIndex = -1;
                     result.recordset.forEach(record => {
                         if (books[lastBookIndex] && record.bookid == books[lastBookIndex].bookid) {
-                            console.log(`Book with id ${record.bookid} already exists.`);
+                            // console.log(`Book with id ${record.bookid} already exists.`);
                             const newAuthor = {
                                 authorid: record.authorid,
                                 firstname: record.firstname,
@@ -133,7 +133,7 @@ class Book {
                             }
                             books[lastBookIndex].authors.push(newAuthor);
                         } else {
-                            console.log(`Book with id ${record.bookid} is a new book.`)
+                            // console.log(`Book with id ${record.bookid} is a new book.`)
                             const newBook = {
                                 bookid: record.bookid,
                                 title: record.title,
@@ -155,7 +155,7 @@ class Book {
                     const validBooks = [];
                     books.forEach(book => {
                         const { error } = Book.validate(book);
-                        if (error) throw { errorMessage: `Book.validate failed.` };
+                        // if (error) throw { errorMessage: `Book.validate failed.` };
 
                         validBooks.push(new Book(book));
                     });

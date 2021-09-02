@@ -8,6 +8,8 @@ router.get('/', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     // need to call the Book class for DB access...
     try {
+        // if we need to have some functionality which will be used often, make a method on the class to handle it
+        // fx. sorting which takes an input parameter
         const books = await Book.readAll();
         return res.send(JSON.stringify(books));
     } catch (err) {
