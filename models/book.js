@@ -8,6 +8,7 @@ const Joi = require('joi');
 const _ = require('lodash');
 
 class Book {
+    // Blueprint for the book - how should a book look
     constructor(bookObj) {
         this.bookid = bookObj.bookid;
         this.title = bookObj.title;

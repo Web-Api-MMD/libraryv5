@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const Book = require('../models/book');
+const Book = require('../models/book'); 
 
-
+// Call the class methods which makes sense here - fx Book.readAll()
 router.get('/', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     // need to call the Book class for DB access...
