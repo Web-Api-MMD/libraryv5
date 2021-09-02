@@ -27,10 +27,11 @@ router.post('/', async (req, res) => {
     const {error} = Book.validate(req.body);
     if (error) return res.status(400).send(JSON.stringify({message: `Bad request. ${error.details[0].message}`}));
 
-    const newBook = new Book(req.body);
+    // Non-static methods from the Book class have to be instantiated before we use the method
+    const newBook = new Book(req.body); 
 
     try {
-        const bookFromTheDB = await newBook.create();
+        const bookFromTheDB = await newBook.create(); // Here we call the create method from the Book class
         return res.send(JSON.stringify(bookFromTheDB));
     } catch(err) {
         return res.status(500).send(JSON.stringify({message: err}));
