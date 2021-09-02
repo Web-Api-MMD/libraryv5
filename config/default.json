@@ -1,8 +1,8 @@
 {
-    "dbConfig_UCN":{
+    "dbConfig_UCN": {
         "options": {
-            "encrypt": true, 
+            "encrypt": true,
             "trustServerCertificate": true
-          }
+        }
     }
 }

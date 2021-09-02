@@ -1,19 +1,40 @@
-const express = require('express'); // require express because we want to use it
-const router = express.Router(); // router variable becuase here we are creating routes
-const Book = require('../models/book'); // Requiring the book class from Models/book.js
+const express = require('express');
+const router = express.Router();
+
+const Book = require('../models/book');
+
 
 router.get('/', async (req, res) => {
-    res.setHeader('Content-Type', 'application/json'); // Set header to send json data
-    // need to call the book class for DB access
+    res.setHeader('Content-Type', 'application/json');
+    // need to call the Book class for DB access...
     try {
-        const books = await Book.readAll(); // Calling a static function on the Book class. 
-        // The readAll() is a static class method in the book.js file bacuase it is a blueprint. We don't know what's in the 
-        // database and we don't have a book object, so that's why we're doing this. 
-        return res.send(JSON.stringify(books)); 
-        // send back json version of the books
+        const books = await Book.readAll();
+        return res.send(JSON.stringify(books));
     } catch (err) {
-        return res.status(500).send(JSON.stringify({message: err})); // internal server error status code
+        return res.status(500).send(JSON.stringify({message: err}));
     }
 });
 
-module.exports = router; // We're exporting the router
+router.post('/', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    // need to validate the req.body (aka the data) that came with the request
+    // if good, then try to send the data to the DB
+    // if bad, then error with 400 bad request
+    
+    // validate
+    const {error} = Book.validate(req.body);
+    if (error) return res.status(400).send(JSON.stringify({message: `Bad request. ${error.details[0].message}`}));
+
+    const newBook = new Book(req.body);
+
+    try {
+        const bookFromTheDB = await newBook.create();
+        return res.send(JSON.stringify(bookFromTheDB));
+    } catch(err) {
+        return res.status(500).send(JSON.stringify({message: err}));
+    }
+
+});
+
+
+module.exports = router;
